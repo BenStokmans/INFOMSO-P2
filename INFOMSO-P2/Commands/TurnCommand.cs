@@ -3,15 +3,15 @@ namespace INFOMSO_P2.Commands;
 
 public class TurnCommand : EntityCommand
 {
-    private int _degrees;
+    public int Degrees;
 
-    public TurnCommand() => _degrees = 0;
-    public TurnCommand(int degrees) => _degrees = degrees;
+    public TurnCommand() => Degrees = 0;
+    public TurnCommand(int degrees) => Degrees = degrees;
 
     public override void Parse(string command)
     {
         // turn right or left
-        _degrees = command.Split(' ')[1] switch
+        Degrees = command.Split(' ')[1] switch
         {
             "right" => 90,
             "left" => 270,
@@ -20,5 +20,5 @@ public class TurnCommand : EntityCommand
     }
 
     protected override void Execute(Entity entity) =>
-        entity.Direction = _degrees == 90 ? entity.Direction.Rotate90() : entity.Direction.Rotate270();
+        entity.Direction = Degrees == 90 ? entity.Direction.Rotate90() : entity.Direction.Rotate270();
 }

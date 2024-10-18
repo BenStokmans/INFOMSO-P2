@@ -6,7 +6,7 @@ public class Character : Entity
 
     public override string ToString()
     {
-        var directionString = Direction switch
+        string? directionString = Direction switch
         {
             { X: 1, Y: 0 } => "east",
             { X: -1, Y: 0 } => "west",

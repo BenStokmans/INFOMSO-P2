@@ -6,22 +6,7 @@ public class FileProgramParser : IProgramParser
     {
         string file = File.ReadAllText(source);
         var commands = new List<ICommand>();
-        string[] lines = file.Split("\n");
-
-        var blocks = new List<string>();
-
-        var currentBlock = "";
-        foreach (string line in lines)
-        {
-            if (line.StartsWith('\t'))
-                currentBlock += line + "\n";
-            else
-            {
-                blocks.Add(currentBlock);
-                currentBlock = line + "\n";
-            }
-        }
-        blocks.RemoveAll(string.IsNullOrEmpty);
+        string[] blocks = CommandParser.GetBlocks(file);
 
         foreach (string block in blocks)
         {

@@ -1,7 +1,6 @@
-﻿
-using INFOMSO_P2;
-using INFOMSO_P2.Commands;
+﻿using INFOMSO_P2.Commands;
 using INFOMSO_P2.Game;
+using INFOMSO_P2.Metrics;
 
 var scene = new Scene();
 
@@ -35,11 +34,17 @@ IProgramParser selectedParser = parsers.ElementAt(parserIndex).Value;
 Console.Write(selectedParser.UserPrompt());
 string? source = Console.ReadLine();
 
-var program = selectedParser.Parse(source);
+INFOMSO_P2.Commands.Program program = selectedParser.Parse(source);
 program.Run(scene);
 
 Console.WriteLine($"End state {scene.GetCharacter()}");
 
+List<IMetricsCalculator> metrics = new()
+{
+    new DepthMetricCalculator(),
+    new RepeatMetricCalculator()
+};
+
 Console.WriteLine("Metrics:");
-var metrics = MetricsCalculator.CalculateMetrics(program);
-Console.WriteLine(metrics);
+foreach (IMetricsCalculator metric in metrics)
+    Console.WriteLine(metric.CalculateMetrics(program));
