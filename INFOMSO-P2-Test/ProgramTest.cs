@@ -16,11 +16,15 @@ public class ProgramTest
         var parser = new FileProgramParser();
         Program parsedProgram = parser.Parse("program.txt");
 
-        Assert.That(parsedProgram.Commands.Count, Is.EqualTo(1));
-        Assert.That(parsedProgram.Commands[0], Is.TypeOf<RepeatCommand>());
-        Assert.That(((RepeatCommand)parsedProgram.Commands[0]).Times, Is.EqualTo(4));
-        Assert.That(((RepeatCommand)parsedProgram.Commands[0]).Commands.Count, Is.EqualTo(2));
-        Assert.That(((RepeatCommand)parsedProgram.Commands[0]).Commands[0], Is.TypeOf<RepeatCommand>());
+        Assert.Multiple(() =>
+        {
+            Assert.That(parsedProgram.Commands.Count, Is.EqualTo(1));
+            Assert.That(parsedProgram.Commands[0], Is.TypeOf<RepeatCommand>());
+            Assert.That(((RepeatCommand)parsedProgram.Commands[0]).Times, Is.EqualTo(4));
+            Assert.That(((RepeatCommand)parsedProgram.Commands[0]).Commands, Has.Count.EqualTo(2));
+            Assert.That(((RepeatCommand)parsedProgram.Commands[0]).Commands[0], Is.TypeOf<RepeatCommand>());
+
+        });
 
         var depthCalculator = new DepthMetricCalculator();
         string depthResult = depthCalculator.CalculateMetrics(parsedProgram);

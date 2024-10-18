@@ -4,7 +4,7 @@ namespace INFOMSO_P2.Commands;
 
 public class HardCodedProgramParser : IProgramParser
 {
-    private Dictionary<string, Program> _programs = new Dictionary<string, Program>()
+    private readonly Dictionary<string, Program> _programs = new()
     {
         { "Rectangle", new Program([
             new MoveCommand(10),

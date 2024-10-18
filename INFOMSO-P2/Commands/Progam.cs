@@ -4,7 +4,7 @@ namespace INFOMSO_P2.Commands;
 
 public class Program(List<ICommand> commands)
 {
-    public List<ICommand> Commands = commands;
+    public readonly List<ICommand> Commands = commands;
 
     public void Run(Scene scene)
     {
