@@ -38,7 +38,7 @@ public static class CommandParser
             }
         }
         blocks.Add(currentBlock);
-        blocks.RemoveAll(string.IsNullOrEmpty);
+        blocks.RemoveAll(block => block is "\n" or "");
 
         return blocks.ToArray();
     }

@@ -13,7 +13,7 @@ var parsers = new Dictionary<string, IProgramParser>
 };
 
 Console.WriteLine("Select program type: ");
-for (int i = 0; i < parsers.Count; i++)
+for (var i = 0; i < parsers.Count; i++)
     Console.WriteLine($"{i + 1}. {parsers.ElementAt(i).Key}");
 
 int parserIndex = -1;

@@ -1,0 +1,4 @@
+Repeat 3 times
+    Move 1
+Turn right
+Move 1

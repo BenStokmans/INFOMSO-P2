@@ -5,6 +5,10 @@ public class FileProgramParser : IProgramParser
     public Program Parse(string source)
     {
         string file = File.ReadAllText(source);
+
+        // replace 4 spaces with tab
+        file = file.Replace("    ", "\t");
+
         var commands = new List<ICommand>();
         string[] blocks = CommandParser.GetBlocks(file);
 

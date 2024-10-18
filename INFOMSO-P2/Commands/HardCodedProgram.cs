@@ -15,7 +15,13 @@ public class HardCodedProgramParser : IProgramParser
             new TurnCommand(90),
             new MoveCommand(10),
             new TurnCommand(90)
-        ]) }
+        ]) },
+        { "Straight Line", new Program([
+            new MoveCommand(10),
+            new MoveCommand(10),
+            new MoveCommand(10),
+            new MoveCommand(10)
+        ]) },
     };
 
     public Program Parse(string source)

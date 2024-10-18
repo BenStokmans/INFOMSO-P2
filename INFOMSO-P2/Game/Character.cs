@@ -10,8 +10,9 @@ public class Character : Entity
         {
             { X: 1, Y: 0 } => "east",
             { X: -1, Y: 0 } => "west",
-            { X: 0, Y: 1 } => "south",
-            { X: 0, Y: -1 } => "north",
+            { X: 0, Y: -1 } => "south",
+            { X: 0, Y: 1 } => "north",
+            _ => throw new ArgumentOutOfRangeException()
         };
         return $"{Position} facing {directionString}";
     }
