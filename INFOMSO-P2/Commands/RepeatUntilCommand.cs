@@ -1,29 +1,36 @@
-﻿using INFOMSO_P2.Game;
-
+using INFOMSO_P2.Game;
 namespace INFOMSO_P2.Commands;
 
-public class RepeatCommand : ICommand
+public class RepeatUntilCommand : ICommand
 {
-    public int Times;
+    public ICondition Condition;
     public readonly List<ICommand> Commands = [];
 
-    public RepeatCommand() {}
-    public RepeatCommand(int times, List<ICommand> commands)
+    public RepeatUntilCommand() { }
+
+    public RepeatUntilCommand(ICondition condition, List<ICommand> commands)
     {
-        Times = times;
+        Condition = condition;
         Commands = commands;
     }
 
-    public void Parse(string command)
+    public void Execute(Scene scene)
+    {
+        while (Condition.Holds(scene))
+        {
+            foreach(ICommand cmd in Commands) cmd.Execute(scene);
+        }
+    }
+
+    public void Parse(String command)
     {
         string[] lines = command.Split('\n');
         if (lines.Length < 2)
-            throw new CommandException("Invalid repeat command");
+            throw new CommandException("Invalid repeat until command");
 
         string[] parts = lines[0].Split(' ');
-        if (parts is not ["Repeat", _, "times"] || !int.TryParse(parts[1], out Times))
-            throw new CommandException("Invalid repeat command");
-
+        Condition.Parse(parts[1]); //TODO check potential throw exeption
+        
         // remove first line and remove one tab from each line
         lines = lines[1..].Select(line => line[1..]).ToArray();
         string commandString = string.Join('\n', lines);
@@ -38,13 +45,6 @@ public class RepeatCommand : ICommand
             Commands.Add(cmd);
         }
     }
-
-    public void Execute(Scene scene)
-    {
-        for (var i = 0; i < Times; i++)
-            foreach (ICommand cmd in Commands)
-                cmd.Execute(scene);
-    }
     
-    public new string ToString() => $"Repeat {Times}";
+    public new string ToString() => $"RepeatUntil {Condition.ToString()}";
 }

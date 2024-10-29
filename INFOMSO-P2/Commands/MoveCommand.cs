@@ -18,4 +18,6 @@ public class MoveCommand : EntityCommand
     }
 
     protected override void Execute(Entity entity) => entity.Move(Distance);
+    
+    public override string ToString() => $"Move {Distance}";
 }

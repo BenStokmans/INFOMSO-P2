@@ -15,4 +15,6 @@ public abstract class EntityCommand : ICommand
     }
 
     protected abstract void Execute(Entity entity);
+
+    public abstract string ToString();
 }

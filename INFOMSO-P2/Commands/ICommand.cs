@@ -6,4 +6,5 @@ public interface ICommand
 {
     void Parse(string command);
     void Execute(Scene scene);
+    string ToString();
 }

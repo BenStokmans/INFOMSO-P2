@@ -11,6 +11,7 @@ public static class CommandParser
             "Move" => new MoveCommand(),
             "Turn" => new TurnCommand(),
             "Repeat" => new RepeatCommand(),
+            "RepeatUntil" => new RepeatUntilCommand(),
             _ => null
         };
 

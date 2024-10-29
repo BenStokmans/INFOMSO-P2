@@ -21,4 +21,6 @@ public class TurnCommand : EntityCommand
 
     protected override void Execute(Entity entity) =>
         entity.Direction = Degrees == 90 ? entity.Direction.Rotate90() : entity.Direction.Rotate270();
+    
+    public override string ToString() => $"TurnCommand {Degrees}";
 }
