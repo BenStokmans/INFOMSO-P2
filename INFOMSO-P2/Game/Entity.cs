@@ -6,4 +6,5 @@ public abstract class Entity
     public Vector2 Direction = Vector2.Right;
 
     public abstract void Move(int distance);
+    public Vector2 GetAheadPosition() => Position + Direction;
 }

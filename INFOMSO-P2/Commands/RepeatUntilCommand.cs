@@ -29,7 +29,7 @@ public class RepeatUntilCommand : ICommand
             throw new CommandException("Invalid repeat until command");
 
         string[] parts = lines[0].Split(' ');
-        Condition.Parse(parts[1]); //TODO check potential throw exeption
+        Condition = ConditionParser.Parse(parts[1]); //TODO check potential throw exeption
         
         // remove first line and remove one tab from each line
         lines = lines[1..].Select(line => line[1..]).ToArray();
