@@ -19,6 +19,8 @@ public class FileMapParser : IMapParser
                     '+' => MapElement.Blocked,
                     'O' => MapElement.Open,
                     'o' => MapElement.Open,
+                    's' => MapElement.Start,
+                    'S' => MapElement.Start,
                     'X' => MapElement.EndState,
                     'x' => MapElement.EndState,
                     _ => MapElement.Open

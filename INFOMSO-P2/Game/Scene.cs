@@ -12,15 +12,23 @@ public class Scene
     public Scene(MapElement[,] map)
     {
         Map = map;
-        Entities.Add(new Character());
+        var character = new Character();
+
         for (var x = 0; x < map.GetLength(0); x++)
         {
             for (var y = 0; y < map.GetLength(1); y++)
             {
                 if (map[x, y] is MapElement.EndState)
                     GoalPosition = new Vector2(x, y);
+                if (map[x, y] is MapElement.Start)
+                    character.Position = new Vector2(x, y);
             }
         }
+        if (map[character.Position.X, character.Position.Y] is MapElement.Blocked)
+            throw new ArgumentException("Character is placed on a blocked tile.");
+
+        character.Path.Add(character.Position);
+        Entities.Add(character);
     }
 
     public Character? GetCharacter() => Entities.FirstOrDefault(e => e is Character) as Character;

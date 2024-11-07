@@ -12,8 +12,11 @@ public class Character : Entity
         if (scene.GetMapElement(newPos) == MapElement.Blocked)
             throw new BlockedException(newPos.X, newPos.Y);
 
+        for (var i = 1; i <= distance; i++)
+        {
+            Path.Add(Position + Direction * i);
+        }
         Position = newPos;
-        Path.Add(Position);
     }
 
     public override string ToString()
@@ -22,8 +25,8 @@ public class Character : Entity
         {
             { X: 1, Y: 0 } => "east",
             { X: -1, Y: 0 } => "west",
-            { X: 0, Y: -1 } => "south",
-            { X: 0, Y: 1 } => "north",
+            { X: 0, Y: -1 } => "north",
+            { X: 0, Y: 1 } => "south",
             _ => throw new ArgumentOutOfRangeException()
         };
         return $"{Position} facing {directionString}";

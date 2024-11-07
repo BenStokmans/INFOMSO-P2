@@ -20,6 +20,8 @@ public class RepeatCommand : ICommand
         if (lines.Length < 2)
             throw new CommandException("Invalid repeat command");
 
+        lines = lines.Select(line => line.TrimEnd()).ToArray();
+
         string[] parts = lines[0].Split(' ');
         if (parts is not ["Repeat", _, "times"] || !int.TryParse(parts[1], out Times))
             throw new CommandException("Invalid repeat command");

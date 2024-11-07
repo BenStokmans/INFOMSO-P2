@@ -18,7 +18,7 @@ public static class CommandParser
         if (cmd == null)
             throw new CommandException("Invalid command");
 
-        cmd.Parse(command.TrimEnd('\n'));
+        cmd.Parse(command.TrimEnd());
         return cmd;
     }
 
