@@ -11,10 +11,10 @@ public abstract class EntityCommand : ICommand
         // the default entity is the character
         Character? character = scene.GetCharacter();
         if (character != null)
-            Execute(character);
+            Execute(character, scene);
     }
 
-    protected abstract void Execute(Entity entity);
+    protected abstract void Execute(Entity entity, Scene scene);
 
-    public abstract string ToString();
+    public abstract override string ToString();
 }

@@ -6,6 +6,7 @@ namespace INFOMSO_P2_Test;
 
 public class ProgramTest
 {
+
     [Test]
     public void ProgramFileParsingTest()
     {
@@ -59,6 +60,13 @@ public class ProgramTest
     [Test]
     public void ProgramRunTest()
     {
+        var map = new MapElement[65, 1];
+        for (var x = 0; x < 65; x++)
+        {
+            map[x, 0] = x < 64 ? MapElement.Open : MapElement.EndState;
+        }
+
+
         var program = new Program([
             new RepeatCommand(4, [
                 new RepeatCommand(3, [
@@ -72,7 +80,7 @@ public class ProgramTest
             ])
         ]);
 
-        var scene = new Scene();
+        var scene = new Scene(map);
         scene.Entities.Add(new Character());
         program.Run(scene);
 

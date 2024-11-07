@@ -2,48 +2,77 @@
 using INFOMSO_P2.Game;
 using INFOMSO_P2.Metrics;
 
-var scene = new Scene();
+var mapParsers = new Dictionary<string, IMapParser>
+{
+    { "file", new FileMapParser() },
+};
+
+Console.WriteLine("Select map type: ");
+for (var i = 0; i < mapParsers.Count; i++)
+    Console.WriteLine($"{i + 1}. {mapParsers.ElementAt(i).Key}");
+
+int mapParserIndex = -1;
+while (mapParserIndex < 0 || mapParserIndex >= mapParsers.Count)
+{
+    Console.Write("Select map type: ");
+    if (!int.TryParse(Console.ReadLine(), out mapParserIndex))
+    {
+        mapParserIndex = -1;
+        Console.WriteLine("Invalid input");
+    }
+    else
+        mapParserIndex--;
+}
+
+IMapParser selectedMapParser = mapParsers.ElementAt(mapParserIndex).Value;
+
+Console.Write(selectedMapParser.UserPrompt());
+string? mapSource = Console.ReadLine();
+
+var map = selectedMapParser.Parse(mapSource);
+
+var scene = new Scene(map);
 
 scene.Entities.Add(new Character());
 
-var parsers = new Dictionary<string, IProgramParser>
+var programParsers = new Dictionary<string, IProgramParser>
 {
     { "file", new FileProgramParser() },
     { "hardcoded", new HardCodedProgramParser() }
 };
 
 Console.WriteLine("Select program type: ");
-for (var i = 0; i < parsers.Count; i++)
-    Console.WriteLine($"{i + 1}. {parsers.ElementAt(i).Key}");
+for (var i = 0; i < programParsers.Count; i++)
+    Console.WriteLine($"{i + 1}. {programParsers.ElementAt(i).Key}");
 
-int parserIndex = -1;
-while (parserIndex < 0 || parserIndex >= parsers.Count)
+int programParserIndex = -1;
+while (programParserIndex < 0 || programParserIndex >= programParsers.Count)
 {
     Console.Write("Select program type: ");
-    if (!int.TryParse(Console.ReadLine(), out parserIndex))
+    if (!int.TryParse(Console.ReadLine(), out programParserIndex))
     {
-        parserIndex = -1;
+        programParserIndex = -1;
         Console.WriteLine("Invalid input");
     }
     else
-        parserIndex--;
+        programParserIndex--;
 }
 
-IProgramParser selectedParser = parsers.ElementAt(parserIndex).Value;
+IProgramParser selectedProgramParser = programParsers.ElementAt(programParserIndex).Value;
 
-Console.Write(selectedParser.UserPrompt());
-string? source = Console.ReadLine();
+Console.Write(selectedProgramParser.UserPrompt());
+string? programSource = Console.ReadLine();
 
-INFOMSO_P2.Commands.Program program = selectedParser.Parse(source);
+INFOMSO_P2.Commands.Program program = selectedProgramParser.Parse(programSource);
 program.Run(scene);
 
 Console.WriteLine($"End state {scene.GetCharacter()}");
 
-List<IMetricsCalculator> metrics = new()
-{
+List<IMetricsCalculator> metrics =
+[
     new DepthMetricCalculator(),
     new RepeatMetricCalculator()
-};
+];
 
 Console.WriteLine("Metrics:");
 foreach (IMetricsCalculator metric in metrics)
