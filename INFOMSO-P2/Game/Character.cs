@@ -2,7 +2,13 @@
 
 public class Character : Entity
 {
-    public override void Move(int distance) => Position += Direction * distance;
+    public List<Vector2> Path;
+
+    public override void Move(int distance)
+    {
+        Position += Direction * distance;
+        Path.Add(Position);
+    }
 
     public override string ToString()
     {
