@@ -35,6 +35,18 @@ public class HardCodedProgramParser : IProgramParser
         return _programs.ElementAt(index - 1).Value;
     }
 
+    public string SourceCode(string source)
+    {
+        if (!int.TryParse(source, out int index))
+            throw new CommandException("Invalid program index");
+
+        if (index < 1 || index > _programs.Count)
+            throw new CommandException("Invalid program index");
+
+
+        return "";
+    }
+
     public string UserPrompt()
     {
         var sb = new StringBuilder();

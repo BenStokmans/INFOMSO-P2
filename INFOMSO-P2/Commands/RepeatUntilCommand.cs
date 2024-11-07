@@ -16,7 +16,7 @@ public class RepeatUntilCommand : ICommand
 
     public void Execute(Scene scene)
     {
-        while (Condition.Holds(scene))
+        while (!Condition.Holds(scene))
         {
             foreach(ICommand cmd in Commands) cmd.Execute(scene);
         }
@@ -28,8 +28,10 @@ public class RepeatUntilCommand : ICommand
         if (lines.Length < 2)
             throw new CommandException("Invalid repeat until command");
 
+        lines = lines.Select(line => line.TrimEnd()).ToArray();
+
         string[] parts = lines[0].Split(' ');
-        Condition = ConditionParser.Parse(parts[1]); //TODO check potential throw exeption
+        Condition = ConditionParser.Parse(parts[1]); //TODO check potential throw exception
         
         // remove first line and remove one tab from each line
         lines = lines[1..].Select(line => line[1..]).ToArray();

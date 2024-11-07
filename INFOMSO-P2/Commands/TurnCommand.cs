@@ -13,8 +13,8 @@ public class TurnCommand : EntityCommand
         // turn right or left
         Degrees = command.Split(' ')[1] switch
         {
-            "right" => 90,
-            "left" => 270,
+            "right" => 270,
+            "left" => 90,
             _ => throw new CommandException("Invalid direction")
         };
     }

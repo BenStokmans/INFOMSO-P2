@@ -1,0 +1,34 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:vm="using:INFOMSO_P2.Gui.ViewModels"
+        xmlns:gui="clr-namespace:INFOMSO_P2.Gui"
+        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        x:Class="INFOMSO_P2.Gui.MainWindow"
+        Title="INFOMSO P3"
+        >
+    <Design.DataContext>
+        <vm:MainWindowViewModel/>
+    </Design.DataContext>
+
+
+    <Grid RowDefinitions="*" ColumnDefinitions="auto, 350, *">
+        <ComboBox Margin="10" Grid.Column="0" SelectedIndex="0" MaxDropDownHeight="150" SelectionChanged="ChangeProgramSelection">
+            <ComboBoxItem>Basic</ComboBoxItem>
+            <ComboBoxItem>Advanced</ComboBoxItem>
+            <ComboBoxItem>Expert</ComboBoxItem>
+            <ComboBoxItem>From file...</ComboBoxItem>
+        </ComboBox>
+        <StackPanel Grid.Column="1" Grid.Row="0" HorizontalAlignment="Stretch" Orientation="Vertical">
+            <StackPanel HorizontalAlignment="Stretch" Orientation="Horizontal">
+                <Button Margin="10" HorizontalAlignment="Stretch" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontSize="20" Background="Coral" Click="RunProgram">Run</Button>
+                <Button Margin="10" HorizontalAlignment="Stretch" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontSize="20" Background="Coral" Click="RunProgram">Run</Button>
+            </StackPanel>
+            <TextBox x:Name="ProgramBox" Height="500" AcceptsReturn="True" TextWrapping="Wrap"/>
+            <TextBox x:Name="OutputBox" Height="200" Margin="0 10 0 10" IsEnabled="False" TextWrapping="Wrap"/>
+        </StackPanel>
+        <gui:ProgramCanvas x:Name="OutputCanvas" Grid.Column="2" Grid.Row="0" BackgroundColor="White" DataContext="{Binding }" Margin="20"></gui:ProgramCanvas>
+    </Grid>
+
+</Window>
