@@ -8,7 +8,7 @@ public class ReachedGoalCondition : ICondition
     {
         return 
             scene.GetMapElement(scene.GetCharacter().Position) 
-                is MapElement.Start or MapElement.EndState;
+                == MapElement.EndState;
     }
     
     public new string ToString() => "ReachedGoal";

@@ -17,7 +17,7 @@ public class MoveCommand : EntityCommand
         throw new CommandException("Invalid move command");
     }
 
-    protected override void Execute(Entity entity) => entity.Move(Distance);
+    protected override void Execute(Entity entity, Scene scene) => entity.Move(Distance, scene);
     
     public override string ToString() => $"Move {Distance}";
 }

@@ -25,5 +25,4 @@ public class FileProgramParser : IProgramParser
     }
 
     public string UserPrompt() => "Enter the path to the file to parse: ";
-
 }

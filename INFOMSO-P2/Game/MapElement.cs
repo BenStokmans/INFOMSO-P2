@@ -4,7 +4,6 @@ public enum MapElement
 {
     Blocked,
     Open,
-    EndState,
-    Start
+    EndState
 }
 

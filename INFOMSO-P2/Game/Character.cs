@@ -2,11 +2,17 @@
 
 public class Character : Entity
 {
-    public List<Vector2> Path;
+    public List<Vector2> Path = [];
 
-    public override void Move(int distance)
+    public override void Move(int distance, Scene scene)
     {
-        Position += Direction * distance;
+        var newPos = Position + Direction * distance;
+        if (newPos.X < 0 || newPos.X >= scene.Width || newPos.Y < 0 || newPos.Y >= scene.Height)
+            throw new OutOfBoundsException(newPos.X, newPos.Y);
+        if (scene.GetMapElement(newPos) == MapElement.Blocked)
+            throw new BlockedException(newPos.X, newPos.Y);
+
+        Position = newPos;
         Path.Add(Position);
     }
 
