@@ -49,21 +49,6 @@ public class ProgramCanvas : Control
             }
         }
 
-        // draw path
-        Character? character = Scene.GetCharacter();
-
-        var path = character.Path;
-        path.Add(character.Position);
-
-        var pathPen = new Pen(new SolidColorBrush(Colors.Red), 4);
-        for (var i = 0; i < character.Path.Count - 1; i++)
-        {
-            Vector2 p1 = character.Path[i];
-            Vector2 p2 = character.Path[i + 1];
-            var p1Point = new Point(p1.X * cellSize.Width + cellSize.Width / 2, p1.Y * cellSize.Height + cellSize.Height / 2);
-            var p2Point = new Point(p2.X * cellSize.Width + cellSize.Width / 2, p2.Y * cellSize.Height + cellSize.Height / 2);
-            context.DrawLine(pathPen, p1Point, p2Point);
-        }
 
         const double characterSizePercentage = 0.6; // percentage of cell size
         double minSize = Math.Min(cellSize.Width, cellSize.Height);
@@ -80,6 +65,7 @@ public class ProgramCanvas : Control
         }
 
         // draw character as blue circle
+        Character? character = Scene.GetCharacter();
         var characterBrush = new SolidColorBrush(Colors.Blue);
         var characterRect = new Rect(character.Position.X * cellSize.Width + (cellSize.Width - characterSize) / 2,
             character.Position.Y * cellSize.Height + (cellSize.Height - characterSize) / 2, characterSize, characterSize);
@@ -109,6 +95,20 @@ public class ProgramCanvas : Control
             var p1 = new Point(0, y);
             var p2 = new Point(rect.Width, y);
             context.DrawLine(gridPen, p1, p2);
+        }
+
+        // draw path
+        var path = character.Path;
+        path.Add(character.Position);
+
+        var pathPen = new Pen(new SolidColorBrush(Colors.Red), 4);
+        for (var i = 0; i < character.Path.Count - 1; i++)
+        {
+            Vector2 p1 = character.Path[i];
+            Vector2 p2 = character.Path[i + 1];
+            var p1Point = new Point(p1.X * cellSize.Width + cellSize.Width / 2, p1.Y * cellSize.Height + cellSize.Height / 2);
+            var p2Point = new Point(p2.X * cellSize.Width + cellSize.Width / 2, p2.Y * cellSize.Height + cellSize.Height / 2);
+            context.DrawLine(pathPen, p1Point, p2Point);
         }
     }
 
