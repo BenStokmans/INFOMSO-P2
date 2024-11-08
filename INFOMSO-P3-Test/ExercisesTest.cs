@@ -1,7 +1,7 @@
-﻿using INFOMSO_P2.Exercises;
-using INFOMSO_P2.Game;
+﻿using INFOMSO_P3.Exercises;
+using INFOMSO_P3.Game;
 
-namespace INFOMSO_P2_Test;
+namespace INFOMSO_P3_Test;
 
 public class ExercisesTest
 {

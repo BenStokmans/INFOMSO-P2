@@ -1,6 +1,6 @@
-using INFOMSO_P2.Commands;
+using INFOMSO_P3.Commands;
 
-namespace INFOMSO_P2_Test;
+namespace INFOMSO_P3_Test;
 
 public class CommandParserTest
 {

@@ -3,14 +3,15 @@ using System.Collections.Generic;
 using Avalonia.Controls;
 using Avalonia.Interactivity;
 using Avalonia.Platform.Storage;
-using INFOMSO_P2.Commands;
-using INFOMSO_P2.Exercises;
-using INFOMSO_P2.Game;
-using INFOMSO_P2.Gui.ViewModels;
-using INFOMSO_P2.Metrics;
+using INFOMSO_P3.Commands;
+using INFOMSO_P3.Exercises;
+using INFOMSO_P3.Game;
+using INFOMSO_P3.Gui.ViewModels;
+using INFOMSO_P3.Metrics;
+
 // ReSharper disable UnusedParameter.Local
 
-namespace INFOMSO_P2.Gui;
+namespace INFOMSO_P3.Gui;
 
 public partial class MainWindow : Window
 {

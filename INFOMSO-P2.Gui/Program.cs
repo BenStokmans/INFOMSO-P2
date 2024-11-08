@@ -1,7 +1,7 @@
 using System;
 using Avalonia;
 
-namespace INFOMSO_P2.Gui;
+namespace INFOMSO_P3.Gui;
 
 public static class Program
 {

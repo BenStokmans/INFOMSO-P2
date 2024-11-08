@@ -1,8 +1,8 @@
 ﻿using Avalonia.Media;
-using INFOMSO_P2.Exercises;
-using INFOMSO_P2.Game;
+using INFOMSO_P3.Exercises;
+using INFOMSO_P3.Game;
 
-namespace INFOMSO_P2.Gui.Drawing;
+namespace INFOMSO_P3.Gui.Drawing;
 
 public class ShapeMapDrawer : ExerciseMapDrawer
 {

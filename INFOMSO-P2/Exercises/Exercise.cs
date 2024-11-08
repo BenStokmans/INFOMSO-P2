@@ -1,6 +1,6 @@
-﻿using INFOMSO_P2.Game;
+﻿using INFOMSO_P3.Game;
 
-namespace INFOMSO_P2.Exercises;
+namespace INFOMSO_P3.Exercises;
 
 public abstract class Exercise(string source, IMapParser mapParser)
 {

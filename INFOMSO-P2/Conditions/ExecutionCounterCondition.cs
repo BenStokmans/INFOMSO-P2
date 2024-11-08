@@ -1,6 +1,6 @@
-using INFOMSO_P2.Game;
+using INFOMSO_P3.Game;
 
-namespace INFOMSO_P2.Conditions;
+namespace INFOMSO_P3.Conditions;
 
 public class ExecutionCounterCondition(int executionCount) : ICondition
 {

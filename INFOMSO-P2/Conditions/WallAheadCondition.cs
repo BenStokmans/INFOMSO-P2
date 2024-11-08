@@ -1,6 +1,7 @@
-using INFOMSO_P2.Exercises;
-using INFOMSO_P2.Game;
-namespace INFOMSO_P2.Conditions;
+using INFOMSO_P3.Exercises;
+using INFOMSO_P3.Game;
+
+namespace INFOMSO_P3.Conditions;
 
 public class WallAheadCondition : ICondition
 {

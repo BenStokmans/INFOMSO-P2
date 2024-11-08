@@ -1,4 +1,4 @@
-﻿namespace INFOMSO_P2.Game;
+﻿namespace INFOMSO_P3.Game;
 
 public abstract class Entity
 {

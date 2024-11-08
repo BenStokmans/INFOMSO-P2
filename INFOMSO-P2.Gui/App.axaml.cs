@@ -1,9 +1,9 @@
 ﻿using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Markup.Xaml;
-using INFOMSO_P2.Gui.ViewModels;
+using INFOMSO_P3.Gui.ViewModels;
 
-namespace INFOMSO_P2.Gui;
+namespace INFOMSO_P3.Gui;
 
 public class App : Application
 {

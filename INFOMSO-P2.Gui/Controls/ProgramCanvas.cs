@@ -2,12 +2,12 @@
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Media;
-using INFOMSO_P2.Exercises;
-using INFOMSO_P2.Game;
-using INFOMSO_P2.Gui.Drawing;
-using INFOMSO_P2.Gui.ViewModels;
+using INFOMSO_P3.Exercises;
+using INFOMSO_P3.Game;
+using INFOMSO_P3.Gui.Drawing;
+using INFOMSO_P3.Gui.ViewModels;
 
-namespace INFOMSO_P2.Gui.Controls;
+namespace INFOMSO_P3.Gui.Controls;
 
 public class ProgramCanvas : Control
 {

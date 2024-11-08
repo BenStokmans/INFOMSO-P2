@@ -1,7 +1,7 @@
-using INFOMSO_P2.Commands;
-using INFOMSO_P2.Metrics;
+using INFOMSO_P3.Commands;
+using INFOMSO_P3.Metrics;
 
-namespace INFOMSO_P2_Test;
+namespace INFOMSO_P3_Test;
 
 public class RepeatMetricTest
 {

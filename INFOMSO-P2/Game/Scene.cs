@@ -1,6 +1,6 @@
-﻿using INFOMSO_P2.Exercises;
+﻿using INFOMSO_P3.Exercises;
 
-namespace INFOMSO_P2.Game;
+namespace INFOMSO_P3.Game;
 
 public class Scene
 {

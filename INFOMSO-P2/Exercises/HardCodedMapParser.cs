@@ -1,4 +1,4 @@
-﻿namespace INFOMSO_P2.Exercises;
+﻿namespace INFOMSO_P3.Exercises;
 
 public class HardCodedMapParser : IMapParser
 {
