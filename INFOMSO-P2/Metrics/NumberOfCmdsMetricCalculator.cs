@@ -12,13 +12,13 @@ public class NumberOfCmdsMetricCalculator : IMetricsCalculator
         {
             numberOfCommands++;
             if (cmd is not RepeatUntilCommand repeatCmd) continue;
-            numberOfCommands += CoundNumberOfCommands(repeatCmd) - 1;
+            numberOfCommands += CountNumberOfCommands(repeatCmd) - 1;
         }
 
         return $"Number of commands: {numberOfCommands}";
     }
 
-    private static int CoundNumberOfCommands(RepeatUntilCommand repeatCommand)
+    private static int CountNumberOfCommands(RepeatUntilCommand repeatCommand)
     {
         var count = 1;
         foreach (ICommand cmd in repeatCommand.Commands)
@@ -26,7 +26,7 @@ public class NumberOfCmdsMetricCalculator : IMetricsCalculator
             count++;
             if (cmd is not RepeatUntilCommand repeatCmd) continue;
 
-            count += CoundNumberOfCommands(repeatCmd) - 1;
+            count += CountNumberOfCommands(repeatCmd) - 1;
         }
         return count;
     }
