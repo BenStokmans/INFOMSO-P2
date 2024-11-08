@@ -10,12 +10,14 @@ public class StringProgramParser : IProgramParser
         var commands = new List<ICommand>();
         string[] blocks = CommandParser.GetBlocks(source);
 
+        int line = 1;
         foreach (string block in blocks)
         {
-            ICommand? cmd = CommandParser.ParseCommand(block);
+            ICommand? cmd = CommandParser.ParseCommand(line, block);
             if (cmd is null)
-                throw new CommandException("Invalid command in program");
+                throw new CommandException(line, "Invalid command in program");
             commands.Add(cmd);
+            line += block.Split('\n').Length - 1;
         }
 
         // parse file

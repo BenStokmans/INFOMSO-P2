@@ -10,7 +10,7 @@ public class DepthMetricCalculator : IMetricsCalculator
 
         foreach (ICommand cmd in program.Commands)
         {
-            if (cmd is not RepeatCommand repeatCmd) continue;
+            if (cmd is not RepeatUntilCommand repeatCmd) continue;
             int depth = CalculateMaxDepth(repeatCmd);
             if (depth > maxDepth)
                 maxDepth = depth;
@@ -19,12 +19,12 @@ public class DepthMetricCalculator : IMetricsCalculator
         return $"Maximum nesting depth: {maxDepth}";
     }
 
-    private static int CalculateMaxDepth(RepeatCommand repeatCommand)
+    private static int CalculateMaxDepth(RepeatUntilCommand repeatCommand)
     {
         var maxDepth = 0;
         foreach (ICommand cmd in repeatCommand.Commands)
         {
-            if (cmd is not RepeatCommand repeatCmd) continue;
+            if (cmd is not RepeatUntilCommand repeatCmd) continue;
             int depth = CalculateMaxDepth(repeatCmd);
             if (depth > maxDepth)
                 maxDepth = depth;

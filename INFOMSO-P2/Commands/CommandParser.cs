@@ -2,7 +2,7 @@
 
 public static class CommandParser
 {
-    public static ICommand? ParseCommand(string command)
+    public static ICommand? ParseCommand(int line, string command)
     {
         string commandName = command.Split(' ')[0];
 
@@ -16,9 +16,9 @@ public static class CommandParser
         };
 
         if (cmd == null)
-            throw new CommandException("Invalid command");
+            throw new CommandException(line, $"Invalid command name: {commandName}");
 
-        cmd.Parse(command.TrimEnd());
+        cmd.Parse(line, command.TrimEnd());
         return cmd;
     }
 

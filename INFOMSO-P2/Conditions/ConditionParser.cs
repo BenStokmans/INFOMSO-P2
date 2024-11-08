@@ -1,4 +1,4 @@
-namespace INFOMSO_P2.Commands;
+namespace INFOMSO_P2.Conditions;
 
 public static class ConditionParser
 {

@@ -1,37 +1,34 @@
 ﻿using INFOMSO_P2.Commands;
+using INFOMSO_P2.Exercises;
 using INFOMSO_P2.Game;
 using INFOMSO_P2.Metrics;
 
-var mapParsers = new Dictionary<string, IMapParser>
+var availableExercises = new Dictionary<string, Exercise>
 {
-    { "file", new FileMapParser() },
+    { "shape", new ShapeExercise() },
+    { "pathfinding", new PathfindingExercise() },
 };
 
-Console.WriteLine("Select map type: ");
-for (var i = 0; i < mapParsers.Count; i++)
-    Console.WriteLine($"{i + 1}. {mapParsers.ElementAt(i).Key}");
+Console.WriteLine("Select exercise: ");
+for (var i = 0; i < availableExercises.Count; i++)
+    Console.WriteLine($"{i + 1}. {availableExercises.ElementAt(i).Key}");
 
-int mapParserIndex = -1;
-while (mapParserIndex < 0 || mapParserIndex >= mapParsers.Count)
+int exerciseIndex = -1;
+while (exerciseIndex < 0 || exerciseIndex >= availableExercises.Count)
 {
-    Console.Write("Select map type: ");
-    if (!int.TryParse(Console.ReadLine(), out mapParserIndex))
+    Console.Write("Select exercise: ");
+    if (!int.TryParse(Console.ReadLine(), out exerciseIndex))
     {
-        mapParserIndex = -1;
+        exerciseIndex = -1;
         Console.WriteLine("Invalid input");
     }
     else
-        mapParserIndex--;
+        exerciseIndex--;
 }
 
-IMapParser selectedMapParser = mapParsers.ElementAt(mapParserIndex).Value;
+Exercise selectedExercise = availableExercises.ElementAt(exerciseIndex).Value;
 
-Console.Write(selectedMapParser.UserPrompt());
-string? mapSource = Console.ReadLine();
-
-var map = selectedMapParser.Parse(mapSource);
-
-var scene = new Scene(map);
+var scene = new Scene(selectedExercise.Map);
 
 scene.Entities.Add(new Character());
 
@@ -71,7 +68,8 @@ Console.WriteLine($"End state {scene.GetCharacter()}");
 List<IMetricsCalculator> metrics =
 [
     new DepthMetricCalculator(),
-    new RepeatMetricCalculator()
+    new RepeatMetricCalculator(),
+    new NumberOfCmdsMetricCalculator(),
 ];
 
 Console.WriteLine("Metrics:");

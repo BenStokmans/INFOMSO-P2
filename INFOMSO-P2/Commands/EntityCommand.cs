@@ -2,11 +2,9 @@
 
 namespace INFOMSO_P2.Commands;
 
-public abstract class EntityCommand : ICommand
+public abstract class EntityCommand : Command
 {
-    public abstract void Parse(string command);
-
-    public void Execute(Scene scene)
+    public override void Execute(Scene scene)
     {
         // the default entity is the character
         Character? character = scene.GetCharacter();

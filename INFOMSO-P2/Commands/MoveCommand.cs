@@ -14,10 +14,20 @@ public class MoveCommand : EntityCommand
         string[] parts = command.Split(' ');
         if (parts is ["Move", _] && int.TryParse(parts[1], out Distance))
             return;
-        throw new CommandException("Invalid move command");
+        throw new CommandException(Line, "Invalid move command: not in the form 'Move <distance>'");
     }
 
-    protected override void Execute(Entity entity, Scene scene) => entity.Move(Distance, scene);
+    protected override void Execute(Entity entity, Scene scene)
+    {
+        try
+        {
+            entity.Move(Distance, scene);
+        }
+        catch (Exception e)
+        {
+            throw new CommandException(Line, e.Message);
+        }
+    }
     
     public override string ToString() => $"Move {Distance}";
 }

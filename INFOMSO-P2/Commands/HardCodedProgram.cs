@@ -4,47 +4,47 @@ namespace INFOMSO_P2.Commands;
 
 public class HardCodedProgramParser : IProgramParser
 {
-    private readonly Dictionary<string, Program> _programs = new()
+    private readonly Dictionary<string, string> _programs = new()
     {
-        { "Rectangle", new Program([
-            new MoveCommand(10),
-            new TurnCommand(90),
-            new MoveCommand(10),
-            new TurnCommand(90),
-            new MoveCommand(10),
-            new TurnCommand(90),
-            new MoveCommand(10),
-            new TurnCommand(90)
-        ]) },
-        { "Straight Line", new Program([
-            new MoveCommand(10),
-            new MoveCommand(10),
-            new MoveCommand(10),
-            new MoveCommand(10)
-        ]) },
+        { "Basic-Shape", "Move 2\r\nTurn right\r\nMove 1\r\nTurn left\r\nMove 1\r\nTurn right\r\nMove 2\r\nTurn right\r\nMove 1\r\nTurn left\r\nMove 1\r\nTurn right\r\nMove 2\r\nTurn right\r\nMove 1\r\nTurn left\r\nMove 1\r\nTurn right\r\nMove 2\r\nTurn right\r\nMove 1\r\nTurn left\r\nMove 1" },
+        { "Advanced-Shape", "Repeat 4 times\r\n\tRepeatUntil WallAhead\r\n\t\tMove 1\r\n\tTurn right\r\n\tMove 1\r\n\tTurn left\r\n\tMove 1\r\n\tTurn right\r\n" },
+        { "Expert-Shape", "RepeatUntil ReachedGoal\r\n\tRepeatUntil WallAhead\r\n\t\tMove 1\r\n\tTurn right\r\n\tMove 1\r\n\tTurn left\r\n\tMove 1\r\n\tTurn right\r\n" },
+        { "Basic-Pathfinding", "Move 1\r\nTurn right\r\nMove 1\r\nTurn left\r\nMove 1\r\nTurn right\r\nMove 1\r\nTurn left\r\nMove 1\r\nTurn right\r\nMove 1\r\nTurn left\r\nMove 1\r\nTurn right\r\nMove 1\r\nTurn left\r\n" },
+        { "Advanced-Pathfinding", "Repeat 4 times\r\n\tMove 1\r\n\tTurn right\r\n\tMove 1\r\n\tTurn left\r\n" },
+        { "Expert-Pathfinding", "RepeatUntil ReachedGoal\r\n\tMove 1\r\n\tTurn right\r\n\tMove 1\r\n\tTurn left\r\n" },
     };
 
     public Program Parse(string source)
     {
-        if (!int.TryParse(source, out int index))
-            throw new CommandException("Invalid program index");
+        string name = source.Trim();
+        if (int.TryParse(source, out int index))
+        {
+            if (index < 1 || index > _programs.Count)
+                throw new ArgumentOutOfRangeException("Invalid program index: " + index);
+            name = _programs.ElementAt(index - 1).Key;
+        }
 
-        if (index < 1 || index > _programs.Count)
-            throw new CommandException("Invalid program index");
+        if (!_programs.ContainsKey(name))
+            throw new ArgumentOutOfRangeException("Invalid program name: " + name);
 
-        return _programs.ElementAt(index - 1).Value;
+        var parser = new StringProgramParser();
+        return parser.Parse(_programs[name]);
     }
 
     public string SourceCode(string source)
     {
-        if (!int.TryParse(source, out int index))
-            throw new CommandException("Invalid program index");
+        string name = source.Trim();
+        if (int.TryParse(source, out int index))
+        {
+            if (index < 1 || index > _programs.Count)
+                throw new ArgumentOutOfRangeException("Invalid program index: " + index);
+            name = _programs.ElementAt(index - 1).Key;
+        }
 
-        if (index < 1 || index > _programs.Count)
-            throw new CommandException("Invalid program index");
+        if (!_programs.ContainsKey(name))
+            throw new ArgumentOutOfRangeException("Invalid program name: " + name);
 
-
-        return "";
+        return _programs[name];
     }
 
     public string UserPrompt()

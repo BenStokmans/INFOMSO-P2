@@ -1,4 +1,6 @@
-﻿namespace INFOMSO_P2.Game;
+﻿using INFOMSO_P2.Exercises;
+
+namespace INFOMSO_P2.Game;
 
 public class Character : Entity
 {
@@ -6,11 +8,14 @@ public class Character : Entity
 
     public override void Move(int distance, Scene scene)
     {
-        var newPos = Position + Direction * distance;
-        if (newPos.X < 0 || newPos.X >= scene.Width || newPos.Y < 0 || newPos.Y >= scene.Height)
-            throw new OutOfBoundsException(newPos.X, newPos.Y);
-        if (scene.GetMapElement(newPos) == MapElement.Blocked)
-            throw new BlockedException(newPos.X, newPos.Y);
+        Vector2 newPos = Position + Direction * distance;
+        // check if there is a wall on the path to the new position
+        for (var i = 1; i <= distance; i++)
+        {
+            Vector2 pos = Position + Direction * i;
+            if (scene.GetMapElement(pos) == MapElement.Blocked)
+                throw new BlockedException(pos.X, pos.Y);
+        }
 
         for (var i = 1; i <= distance; i++)
         {
@@ -29,6 +34,7 @@ public class Character : Entity
             { X: 0, Y: 1 } => "south",
             _ => throw new ArgumentOutOfRangeException()
         };
+
         return $"{Position} facing {directionString}";
     }
 }

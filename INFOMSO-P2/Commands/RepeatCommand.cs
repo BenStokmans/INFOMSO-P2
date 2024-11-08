@@ -1,52 +1,31 @@
-﻿using INFOMSO_P2.Game;
+﻿using INFOMSO_P2.Conditions;
+using INFOMSO_P2.Game;
 
 namespace INFOMSO_P2.Commands;
 
-public class RepeatCommand : ICommand
+public class RepeatCommand : RepeatUntilCommand
 {
     public int Times;
-    public readonly List<ICommand> Commands = [];
-
     public RepeatCommand() {}
-    public RepeatCommand(int times, List<ICommand> commands)
+    public RepeatCommand(int times, List<ICommand> commands) : base(new ExecutionCounterCondition(times), commands)
     {
         Times = times;
-        Commands = commands;
     }
 
-    public void Parse(string command)
+    protected override void ParseCondition(string condition)
     {
-        string[] lines = command.Split('\n');
-        if (lines.Length < 2)
-            throw new CommandException("Invalid repeat command");
-
-        lines = lines.Select(line => line.TrimEnd()).ToArray();
-
-        string[] parts = lines[0].Split(' ');
+        string[] parts = condition.Split(' ');
         if (parts is not ["Repeat", _, "times"] || !int.TryParse(parts[1], out Times))
-            throw new CommandException("Invalid repeat command");
+            throw new CommandException(Line, "Invalid repeat command: not in the form 'Repeat <times> times'");
 
-        // remove first line and remove one tab from each line
-        lines = lines[1..].Select(line => line[1..]).ToArray();
-        string commandString = string.Join('\n', lines);
-
-        // separate blocks
-        string[] blocks = CommandParser.GetBlocks(commandString);
-        foreach (string block in blocks)
-        {
-            ICommand? cmd = CommandParser.ParseCommand(block);
-            if (cmd is null)
-                throw new CommandException("Invalid command in repeat block");
-            Commands.Add(cmd);
-        }
+        Condition = new ExecutionCounterCondition(Times);
     }
 
-    public void Execute(Scene scene)
+    public override void Execute(Scene scene)
     {
-        for (var i = 0; i < Times; i++)
-            foreach (ICommand cmd in Commands)
-                cmd.Execute(scene);
+        base.Execute(scene);
+        Condition = new ExecutionCounterCondition(Times);
     }
-    
-    public new string ToString() => $"Repeat {Times}";
+
+    public override string ToString() => $"Repeat";
 }

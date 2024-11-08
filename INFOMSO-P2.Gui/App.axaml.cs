@@ -18,10 +18,7 @@ public partial class App : Application
         {
             var mainWindow = new MainWindow();
 
-            var vm = new MainWindowViewModel()
-            {
-                Vm = new ProgramControlViewModel()
-            };
+            var vm = new MainWindowViewModel();
             mainWindow.DataContext = vm;
             desktop.MainWindow = mainWindow;
         }

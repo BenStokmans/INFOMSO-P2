@@ -7,7 +7,7 @@ public class CommandParserTest
     [Test]
     public void CommandParserTestMove()
     {
-        ICommand? command = CommandParser.ParseCommand("Move 1");
+        ICommand? command = CommandParser.ParseCommand(0, "Move 1");
         Assert.Multiple(() =>
         {
             Assert.That(command, Is.TypeOf<MoveCommand>());
@@ -18,7 +18,7 @@ public class CommandParserTest
     [Test]
     public void CommandParserTestTurn()
     {
-        ICommand? command = CommandParser.ParseCommand("Turn right");
+        ICommand? command = CommandParser.ParseCommand(0, "Turn right");
         Assert.Multiple(() =>
         {
             Assert.That(command, Is.TypeOf<TurnCommand>());
@@ -29,7 +29,7 @@ public class CommandParserTest
     [Test]
     public void CommandParserTestRepeat()
     {
-        ICommand? command = CommandParser.ParseCommand("Repeat 3 times\n\tMove 1");
+        ICommand? command = CommandParser.ParseCommand(0,"Repeat 3 times\n\tMove 1");
         Assert.Multiple(() =>
         {
             Assert.That(command, Is.TypeOf<RepeatCommand>());

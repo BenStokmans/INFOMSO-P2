@@ -4,7 +4,7 @@ namespace INFOMSO_P2.Commands;
 
 public interface ICommand
 {
-    void Parse(string command);
+    void Parse(int line, string command);
     void Execute(Scene scene);
     string ToString();
 }

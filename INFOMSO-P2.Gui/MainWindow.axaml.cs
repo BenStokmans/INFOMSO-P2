@@ -1,10 +1,10 @@
 using System;
 using System.Collections.Generic;
-using System.IO;
 using Avalonia.Controls;
 using Avalonia.Interactivity;
 using Avalonia.Platform.Storage;
 using INFOMSO_P2.Commands;
+using INFOMSO_P2.Exercises;
 using INFOMSO_P2.Gui.ViewModels;
 using INFOMSO_P2.Metrics;
 
@@ -34,17 +34,20 @@ public partial class MainWindow : Window
         }
         catch (Exception ex)
         {
-            OutputBox.Text = ex.ToString();
+            OutputBox.Text = ex.Message;
             return;
         }
 
         OutputBox.Text = "Program executed successfully\n";
-        OutputBox.Text += $"End state {ViewModel.Scene.GetCharacter()}\n";
+        var character = ViewModel.Scene.GetCharacter();
+        var goalString = ViewModel.Scene.GoalPosition != null ? ViewModel.Scene.GoalPosition == character.Position ? " goal reached" : "goal not reached" : "";
+        OutputBox.Text += $"End state {character} - {goalString}\n";
 
         List<IMetricsCalculator> metrics =
         [
             new DepthMetricCalculator(),
-            new RepeatMetricCalculator()
+            new RepeatMetricCalculator(),
+            new NumberOfCmdsMetricCalculator(),
         ];
 
         OutputBox.Text += "Metrics:\n";
@@ -59,8 +62,10 @@ public partial class MainWindow : Window
         if (e.AddedItems.Count == 0) return;
         if (ViewModel is null) return;
 
+        var selection = (ProgramSelection.SelectedItem as ComboBoxItem)?.Content.ToString();
+
         IProgramParser parser;
-        switch (e.AddedItems[0])
+        switch (selection)
         {
             case "Basic":
                 parser = new HardCodedProgramParser();
@@ -78,11 +83,12 @@ public partial class MainWindow : Window
 
         if (parser is HardCodedProgramParser)
         {
-            ProgramBox.Text = parser.SourceCode(e.AddedItems[0]?.ToString());
+            var exercise = (ExerciseBox.SelectedItem as ComboBoxItem)?.Content.ToString();
+            ProgramBox.Text = parser.SourceCode(selection + "-" + exercise);
             return;
         }
 
-        var topLevel = GetTopLevel(this);
+        TopLevel? topLevel = GetTopLevel(this);
         var files = await topLevel.StorageProvider.OpenFilePickerAsync(new FilePickerOpenOptions
         {
             Title = "Open Program File",
@@ -91,5 +97,21 @@ public partial class MainWindow : Window
 
         if (files.Count != 1) return;
         ProgramBox.Text = parser.SourceCode(files[0].Path.AbsolutePath);
+    }
+
+    private void ChangeExerciseSelection(object? sender, SelectionChangedEventArgs e)
+    {
+        if (e.AddedItems.Count == 0) return;
+        if (ViewModel is null) return;
+
+        var selection = (ExerciseBox.SelectedItem as ComboBoxItem)?.Content.ToString();
+        ViewModel.Exercise = selection switch
+        {
+            "Shape" => new ShapeExercise(),
+            "Pathfinding" => new PathfindingExercise(),
+            _ => throw new ArgumentOutOfRangeException("exercise", "Invalid exercise selected")
+        };
+        ViewModel.ResetScene();
+        OutputCanvas.InvalidateVisual();
     }
 }

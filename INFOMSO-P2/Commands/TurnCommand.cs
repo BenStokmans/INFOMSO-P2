@@ -10,12 +10,17 @@ public class TurnCommand : EntityCommand
 
     public override void Parse(string command)
     {
+        var parts = command.Split(' ');
+        if (parts.Length != 2)
+            throw new CommandException(Line, "Invalid turn command: not in the form 'Turn <direction>'");
+
+        var direction = parts[1].ToLower();
         // turn right or left
-        Degrees = command.Split(' ')[1] switch
+        Degrees = direction switch
         {
             "right" => 270,
             "left" => 90,
-            _ => throw new CommandException("Invalid direction")
+            _ => throw new CommandException(Line, "Invalid direction in turn command: " + direction)
         };
     }
 

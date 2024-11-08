@@ -1,9 +1,9 @@
-namespace INFOMSO_P2.Game;
+namespace INFOMSO_P2.Exercises;
 
 public enum MapElement
 {
-    Blocked,
     Open,
+    Blocked,
     EndState,
     Start
 }

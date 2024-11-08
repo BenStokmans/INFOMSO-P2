@@ -1,6 +1,6 @@
 using INFOMSO_P2.Commands;
+using INFOMSO_P2.Exercises;
 using INFOMSO_P2.Game;
-using INFOMSO_P2.Metrics;
 
 namespace INFOMSO_P2_Test;
 

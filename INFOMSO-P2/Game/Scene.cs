@@ -1,4 +1,6 @@
-﻿namespace INFOMSO_P2.Game;
+﻿using INFOMSO_P2.Exercises;
+
+namespace INFOMSO_P2.Game;
 
 public class Scene
 {
@@ -21,7 +23,10 @@ public class Scene
                 if (map[x, y] is MapElement.EndState)
                     GoalPosition = new Vector2(x, y);
                 if (map[x, y] is MapElement.Start)
+                {
                     character.Position = new Vector2(x, y);
+                    GoalPosition = new Vector2(x, y);
+                }
             }
         }
         if (map[character.Position.X, character.Position.Y] is MapElement.Blocked)
