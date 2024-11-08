@@ -67,7 +67,6 @@ public class ProgramTest
             map[x, 0] = x < 64 ? MapElement.Open : MapElement.EndState;
         }
 
-
         var program = new Program([
             new RepeatCommand(4, [
                 new RepeatCommand(3, [

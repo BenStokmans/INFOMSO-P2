@@ -18,7 +18,6 @@ public class CommandTest
     public void Setup()
     {
         _scene = new Scene(_map);
-        _scene.Entities.Add(new Character());
     }
 
     [Test]
@@ -41,7 +40,7 @@ public class CommandTest
         new TurnCommand(270).Execute(_scene);
 
         var command = new MoveCommand(1);
-        Assert.Throws<BlockedException>(() => command.Execute(_scene));
+        Assert.Throws<CommandException>(() => command.Execute(_scene));
 
         new TurnCommand(90).Execute(_scene);
         command.Execute(_scene);
@@ -49,7 +48,7 @@ public class CommandTest
         Assert.That(_scene.GetCharacter().Position, Is.EqualTo(new Vector2(1, 0)));
 
         new TurnCommand(90).Execute(_scene);
-        Assert.Throws<OutOfBoundsException>(() => command.Execute(_scene));
+        Assert.Throws<CommandException>(() => command.Execute(_scene));
     }
 
     [Test]

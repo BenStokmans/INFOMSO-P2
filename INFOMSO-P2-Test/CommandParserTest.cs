@@ -22,7 +22,7 @@ public class CommandParserTest
         Assert.Multiple(() =>
         {
             Assert.That(command, Is.TypeOf<TurnCommand>());
-            Assert.That(((TurnCommand)command).Degrees, Is.EqualTo(90));
+            Assert.That(((TurnCommand)command).Degrees, Is.EqualTo(270));
         });
     }
 

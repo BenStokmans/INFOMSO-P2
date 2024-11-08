@@ -9,7 +9,7 @@ public class FileMapParser : IMapParser
         lines = lines.Select(line => line.Trim()).ToArray();
 
         int width = lines[0].Length;
-        var map = new MapElement[lines.Length, width];
+        var map = new MapElement[width, lines.Length];
         for (var y = 0; y < lines.Length; y++)
         {
             for (var x = 0; x < width; x++)
