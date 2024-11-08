@@ -4,6 +4,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:vm="using:INFOMSO_P2.Gui.ViewModels"
         xmlns:gui="clr-namespace:INFOMSO_P2.Gui"
+        xmlns:controls="clr-namespace:INFOMSO_P2.Gui.Controls"
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
         x:Class="INFOMSO_P2.Gui.MainWindow"
         Title="INFOMSO P3"
@@ -32,7 +33,7 @@
             <TextBox x:Name="ProgramBox" Height="500" AcceptsTab="True" AcceptsReturn="True" TextWrapping="Wrap"/>
             <TextBox x:Name="OutputBox" Height="200" IsReadOnly="True" Margin="0 10 0 10" TextWrapping="Wrap"/>
         </StackPanel>
-        <gui:ProgramCanvas x:Name="OutputCanvas" Grid.Column="2" Grid.Row="0" BackgroundColor="White" DataContext="{Binding }" Margin="20"></gui:ProgramCanvas>
+        <controls:ProgramCanvas x:Name="OutputCanvas" Grid.Column="2" Grid.Row="0" BackgroundColor="White" DataContext="{Binding }" Margin="20"></controls:ProgramCanvas>
     </Grid>
 
 </Window>

@@ -5,6 +5,7 @@ using Avalonia.Interactivity;
 using Avalonia.Platform.Storage;
 using INFOMSO_P2.Commands;
 using INFOMSO_P2.Exercises;
+using INFOMSO_P2.Game;
 using INFOMSO_P2.Gui.ViewModels;
 using INFOMSO_P2.Metrics;
 
@@ -13,6 +14,13 @@ namespace INFOMSO_P2.Gui;
 public partial class MainWindow : Window
 {
     public MainWindowViewModel? ViewModel => DataContext as MainWindowViewModel;
+
+    private readonly List<IMetricsCalculator> _metrics =
+    [
+        new DepthMetricCalculator(),
+        new RepeatMetricCalculator(),
+        new NumberOfCmdsMetricCalculator(),
+    ];
 
     public MainWindow()
     {
@@ -39,19 +47,12 @@ public partial class MainWindow : Window
         }
 
         OutputBox.Text = "Program executed successfully\n";
-        var character = ViewModel.Scene.GetCharacter();
-        var goalString = ViewModel.Scene.GoalPosition != null ? ViewModel.Scene.GoalPosition == character.Position ? " goal reached" : "goal not reached" : "";
+        Character? character = ViewModel.Scene.GetCharacter();
+        string goalString = ViewModel.Scene.GoalPosition != null ? ViewModel.Scene.GoalPosition == character.Position ? " goal reached" : "goal not reached" : "";
         OutputBox.Text += $"End state {character} - {goalString}\n";
 
-        List<IMetricsCalculator> metrics =
-        [
-            new DepthMetricCalculator(),
-            new RepeatMetricCalculator(),
-            new NumberOfCmdsMetricCalculator(),
-        ];
-
         OutputBox.Text += "Metrics:\n";
-        foreach (IMetricsCalculator metric in metrics)
+        foreach (IMetricsCalculator metric in _metrics)
             OutputBox.Text += $"{metric.CalculateMetrics(program)}\n";
 
         OutputCanvas.InvalidateVisual();
@@ -87,7 +88,15 @@ public partial class MainWindow : Window
             var exercise = (ExerciseBox.SelectedItem as ComboBoxItem)?.Content.ToString();
             if (exercise == "From file...") return;
 
-            ProgramBox.Text = parser.SourceCode(selection + "-" + exercise);
+            try
+            {
+                ProgramBox.Text = parser.SourceCode(selection + "-" + exercise);
+            }
+            catch
+            {
+                // ignored
+            }
+
             return;
         }
 
