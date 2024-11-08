@@ -7,7 +7,7 @@ public class RepeatCommand : RepeatUntilCommand
 {
     public int Times;
     public RepeatCommand() {}
-    public RepeatCommand(int times, List<ICommand> commands) : base(new ExecutionCounterCondition(times), commands)
+    public RepeatCommand(int times, List<Command> commands) : base(new ExecutionCounterCondition(times), commands)
     {
         Times = times;
     }

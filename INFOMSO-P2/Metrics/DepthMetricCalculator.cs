@@ -8,7 +8,7 @@ public class DepthMetricCalculator : IMetricsCalculator
     {
         var maxDepth = 0;
 
-        foreach (ICommand cmd in program.Commands)
+        foreach (Command cmd in program.Commands)
         {
             if (cmd is not RepeatUntilCommand repeatCmd) continue;
             int depth = CalculateMaxDepth(repeatCmd);
@@ -22,7 +22,7 @@ public class DepthMetricCalculator : IMetricsCalculator
     private static int CalculateMaxDepth(RepeatUntilCommand repeatCommand)
     {
         var maxDepth = 0;
-        foreach (ICommand cmd in repeatCommand.Commands)
+        foreach (Command cmd in repeatCommand.Commands)
         {
             if (cmd is not RepeatUntilCommand repeatCmd) continue;
             int depth = CalculateMaxDepth(repeatCmd);

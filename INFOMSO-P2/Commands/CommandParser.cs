@@ -2,11 +2,11 @@
 
 public static class CommandParser
 {
-    public static ICommand? ParseCommand(int line, string command)
+    public static Command? ParseCommand(int line, string command)
     {
         string commandName = command.Split(' ')[0];
 
-        ICommand? cmd = commandName switch
+        Command? cmd = commandName switch
         {
             "Move" => new MoveCommand(),
             "Turn" => new TurnCommand(),

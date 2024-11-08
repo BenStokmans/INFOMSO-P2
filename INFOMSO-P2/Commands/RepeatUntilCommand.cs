@@ -5,11 +5,11 @@ namespace INFOMSO_P2.Commands;
 public class RepeatUntilCommand : Command
 {
     public ICondition Condition;
-    public readonly List<ICommand> Commands = [];
+    public readonly List<Command> Commands = [];
 
     public RepeatUntilCommand() { }
 
-    public RepeatUntilCommand(ICondition condition, List<ICommand> commands)
+    public RepeatUntilCommand(ICondition condition, List<Command> commands)
     {
         Condition = condition;
         Commands = commands;
@@ -19,7 +19,7 @@ public class RepeatUntilCommand : Command
     {
         while (!Condition.Holds(scene))
         {
-            foreach(ICommand cmd in Commands) cmd.Execute(scene);
+            foreach(Command cmd in Commands) cmd.Execute(scene);
         }
     }
 
@@ -53,7 +53,7 @@ public class RepeatUntilCommand : Command
         string[] blocks = CommandParser.GetBlocks(commandString);
         foreach (string block in blocks)
         {
-            ICommand? cmd = CommandParser.ParseCommand(line, block);
+            Command? cmd = CommandParser.ParseCommand(line, block);
             if (cmd is null)
                 throw new CommandException(line, "Invalid command in repeat block");
             Commands.Add(cmd);

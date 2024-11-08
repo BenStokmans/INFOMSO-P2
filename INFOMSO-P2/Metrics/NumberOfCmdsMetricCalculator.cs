@@ -8,7 +8,7 @@ public class NumberOfCmdsMetricCalculator : IMetricsCalculator
     {
         var numberOfCommands = 0;
 
-        foreach (ICommand cmd in program.Commands)
+        foreach (Command cmd in program.Commands)
         {
             numberOfCommands++;
             if (cmd is not RepeatUntilCommand repeatCmd) continue;
@@ -21,7 +21,7 @@ public class NumberOfCmdsMetricCalculator : IMetricsCalculator
     private static int CountNumberOfCommands(RepeatUntilCommand repeatCommand)
     {
         var count = 1;
-        foreach (ICommand cmd in repeatCommand.Commands)
+        foreach (Command cmd in repeatCommand.Commands)
         {
             count++;
             if (cmd is not RepeatUntilCommand repeatCmd) continue;

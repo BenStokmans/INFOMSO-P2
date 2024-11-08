@@ -2,13 +2,13 @@
 
 namespace INFOMSO_P2.Commands;
 
-public class Program(List<ICommand> commands)
+public class Program(List<Command> commands)
 {
-    public readonly List<ICommand> Commands = commands;
+    public readonly List<Command> Commands = commands;
 
     public void Run(Scene scene)
     {
-        foreach (ICommand cmd in Commands)
+        foreach (Command cmd in Commands)
             cmd.Execute(scene);
     }
 }

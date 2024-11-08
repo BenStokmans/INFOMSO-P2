@@ -2,7 +2,7 @@
 
 namespace INFOMSO_P2.Commands;
 
-public abstract class Command : ICommand
+public abstract class Command
 {
     public int Line { get; private set; }
 
