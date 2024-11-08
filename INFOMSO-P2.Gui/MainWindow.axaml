@@ -26,6 +26,7 @@
                 <ComboBox x:Name="ExerciseBox" Margin="10" Width="150" Grid.Column="0" SelectedIndex="0" MaxDropDownHeight="150" SelectionChanged="ChangeExerciseSelection">
                     <ComboBoxItem>Shape</ComboBoxItem>
                     <ComboBoxItem>Pathfinding</ComboBoxItem>
+                    <ComboBoxItem>From file...</ComboBoxItem>
                 </ComboBox>
             </StackPanel>
             <TextBox x:Name="ProgramBox" Height="500" AcceptsTab="True" AcceptsReturn="True" TextWrapping="Wrap"/>

@@ -81,9 +81,12 @@ public partial class MainWindow : Window
                 break;
         }
 
+
         if (parser is HardCodedProgramParser)
         {
             var exercise = (ExerciseBox.SelectedItem as ComboBoxItem)?.Content.ToString();
+            if (exercise == "From file...") return;
+
             ProgramBox.Text = parser.SourceCode(selection + "-" + exercise);
             return;
         }
@@ -99,16 +102,32 @@ public partial class MainWindow : Window
         ProgramBox.Text = parser.SourceCode(files[0].Path.AbsolutePath);
     }
 
-    private void ChangeExerciseSelection(object? sender, SelectionChangedEventArgs e)
+    private async void ChangeExerciseSelection(object? sender, SelectionChangedEventArgs e)
     {
         if (e.AddedItems.Count == 0) return;
         if (ViewModel is null) return;
 
         var selection = (ExerciseBox.SelectedItem as ComboBoxItem)?.Content.ToString();
+
+        var source = "";
+        if (selection == "From file...")
+        {
+            TopLevel? topLevel = GetTopLevel(this);
+            var files = await topLevel.StorageProvider.OpenFilePickerAsync(new FilePickerOpenOptions
+            {
+                Title = "Open Exercise File",
+                AllowMultiple = false
+            });
+
+            if (files.Count != 1) return;
+            source = files[0].Path.AbsolutePath;
+        }
+
         ViewModel.Exercise = selection switch
         {
             "Shape" => new ShapeExercise(),
             "Pathfinding" => new PathfindingExercise(),
+            "From file.." => new FileExcercise(source),
             _ => throw new ArgumentOutOfRangeException("exercise", "Invalid exercise selected")
         };
         ViewModel.ResetScene();
