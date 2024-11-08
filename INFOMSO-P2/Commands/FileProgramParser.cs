@@ -8,7 +8,5 @@ public class FileProgramParser : StringProgramParser
         return base.Parse(file);
     }
 
-    public string SourceCode(string source) => File.ReadAllText(source);
-
-    public string UserPrompt() => "Enter the path to the file to parse: ";
+    public override string SourceCode(string source) => File.ReadAllText(source);
 }

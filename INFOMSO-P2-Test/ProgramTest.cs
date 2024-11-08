@@ -20,7 +20,7 @@ public class ProgramTest
 
         Assert.Multiple(() =>
         {
-            Assert.That(parsedProgram.Commands.Count, Is.EqualTo(1));
+            Assert.That(parsedProgram.Commands, Has.Count.EqualTo(1));
             Assert.That(parsedProgram.Commands[0], Is.TypeOf<RepeatCommand>());
             Assert.That(((RepeatCommand)parsedProgram.Commands[0]).Times, Is.EqualTo(4));
             Assert.That(((RepeatCommand)parsedProgram.Commands[0]).Commands, Has.Count.EqualTo(2));

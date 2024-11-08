@@ -7,7 +7,7 @@ public class ReachedGoalCondition : ICondition
 {
     public bool Holds(Scene scene)
     {
-        Character? character = scene.GetCharacter();
+        Character character = scene.GetCharacter();
         return 
             scene.GetMapElement(character.Position)
                 == MapElement.EndState || (scene.GetMapElement(character.Position) == MapElement.Start && character.Path.Count > 1);

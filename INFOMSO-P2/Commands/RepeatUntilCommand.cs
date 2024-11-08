@@ -4,12 +4,12 @@ namespace INFOMSO_P2.Commands;
 
 public class RepeatUntilCommand : Command
 {
-    public ICondition Condition;
+    protected ICondition Condition = null!;
     public readonly List<Command> Commands = [];
 
     public RepeatUntilCommand() { }
 
-    public RepeatUntilCommand(ICondition condition, List<Command> commands)
+    protected RepeatUntilCommand(ICondition condition, List<Command> commands)
     {
         Condition = condition;
         Commands = commands;
@@ -28,12 +28,16 @@ public class RepeatUntilCommand : Command
         string[] parts = condition.Split(' ');
         if (parts.Length != 2)
             throw new CommandException(Line, "Invalid repeat until command: no condition found");
-        Condition = ConditionParser.Parse(parts[1]);
-        if (Condition is null)
-            throw new CommandException(Line, "Invalid condition in repeat until command: " + parts[1]);
+        try
+        {
+            Condition = ConditionParser.Parse(parts[1]);
+        } catch (Exception e)
+        {
+            throw new CommandException(Line, e.Message);
+        }
     }
 
-    public override void Parse(string command)
+    protected override void Parse(string command)
     {
         string[] lines = command.Split('\n');
         if (lines.Length < 2)

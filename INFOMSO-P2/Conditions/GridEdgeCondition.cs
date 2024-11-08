@@ -9,6 +9,8 @@ public class GridEdgeCondition : ICondition
     public bool Holds(Scene scene)
     {
         Vector2 pos = scene.GetCharacter().Position;
-        return (pos.X == 0 || pos.X == scene.Width - 1 || pos.Y == 0 || pos.Y == scene.Height - 1);
+        return pos.X == 0 || pos.X == scene.Width - 1 || pos.Y == 0 || pos.Y == scene.Height - 1;
     }
+
+    public new string ToString() => "GridEdge";
 }

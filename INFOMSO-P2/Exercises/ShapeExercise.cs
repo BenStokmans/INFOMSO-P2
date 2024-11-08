@@ -6,7 +6,7 @@ public class ShapeExercise() : Exercise("shape", new HardCodedMapParser())
 {
     public override bool IsCompleted(Scene scene)
     {
-        Character? character = scene.GetCharacter();
+        Character character = scene.GetCharacter();
         var path = character.Path;
 
         // check if every open tile is visited

@@ -3,7 +3,6 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:vm="using:INFOMSO_P2.Gui.ViewModels"
-        xmlns:gui="clr-namespace:INFOMSO_P2.Gui"
         xmlns:controls="clr-namespace:INFOMSO_P2.Gui.Controls"
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
         x:Class="INFOMSO_P2.Gui.MainWindow"
@@ -24,7 +23,7 @@
         <StackPanel Grid.Column="1" Grid.Row="0" HorizontalAlignment="Stretch" Orientation="Vertical">
             <StackPanel HorizontalAlignment="Stretch" Orientation="Horizontal">
                 <Button Margin="10" HorizontalAlignment="Stretch" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontSize="20" Background="Coral" Click="RunProgram">Run</Button>
-                <ComboBox x:Name="ExerciseBox" Margin="10" Width="150" Grid.Column="0" SelectedIndex="0" MaxDropDownHeight="150" SelectionChanged="ChangeExerciseSelection">
+                <ComboBox x:Name="ExerciseBox" Margin="10" Width="150" SelectedIndex="0" MaxDropDownHeight="150" SelectionChanged="ChangeExerciseSelection">
                     <ComboBoxItem>Shape</ComboBoxItem>
                     <ComboBoxItem>Pathfinding</ComboBoxItem>
                     <ComboBoxItem>From file...</ComboBoxItem>

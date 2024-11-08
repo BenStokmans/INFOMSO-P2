@@ -10,7 +10,7 @@ public class StringProgramParser : IProgramParser
         var commands = new List<Command>();
         string[] blocks = CommandParser.GetBlocks(source);
 
-        int line = 1;
+        var line = 1;
         foreach (string block in blocks)
         {
             Command? cmd = CommandParser.ParseCommand(line, block);
@@ -24,7 +24,5 @@ public class StringProgramParser : IProgramParser
         return new Program(commands);
     }
 
-    public string SourceCode(string source) => File.ReadAllText(source);
-
-    public string UserPrompt() => "Type out source code for program: ";
+    public virtual string SourceCode(string source) => source;
 }

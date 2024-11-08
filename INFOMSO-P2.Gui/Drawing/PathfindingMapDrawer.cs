@@ -1,7 +1,6 @@
 ﻿using System;
 using Avalonia;
 using Avalonia.Media;
-using INFOMSO_P2.Exercises;
 using INFOMSO_P2.Game;
 
 namespace INFOMSO_P2.Gui.Drawing;
@@ -23,7 +22,7 @@ public class PathfindingMapDrawer : DefaultMapDrawer
         DrawCross(context, goalRect.Center, goalSize, new Pen(goalBrush, 4));
     }
 
-    private void DrawCross(DrawingContext context, Point center, double size, Pen pen)
+    private static void DrawCross(DrawingContext context, Point center, double size, Pen pen)
     {
         double halfSize = size / 2;
         var p1 = new Point(center.X - halfSize, center.Y - halfSize);

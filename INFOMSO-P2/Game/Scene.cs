@@ -22,11 +22,10 @@ public class Scene
             {
                 if (map[x, y] is MapElement.EndState)
                     GoalPosition = new Vector2(x, y);
-                if (map[x, y] is MapElement.Start)
-                {
-                    character.Position = new Vector2(x, y);
-                    GoalPosition = new Vector2(x, y);
-                }
+                if (map[x, y] is not MapElement.Start) continue;
+
+                character.Position = new Vector2(x, y);
+                GoalPosition = new Vector2(x, y);
             }
         }
         if (map[character.Position.X, character.Position.Y] is MapElement.Blocked)
@@ -36,7 +35,7 @@ public class Scene
         Entities.Add(character);
     }
 
-    public Character? GetCharacter() => Entities.FirstOrDefault(e => e is Character) as Character;
+    public Character GetCharacter() => (Entities.First(e => e is Character) as Character)!;
 
     public MapElement GetMapElement(Vector2 v)
     {

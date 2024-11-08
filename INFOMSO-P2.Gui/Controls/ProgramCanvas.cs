@@ -11,10 +11,8 @@ namespace INFOMSO_P2.Gui.Controls;
 
 public class ProgramCanvas : Control
 {
-
-    public Scene? Scene => (DataContext as MainWindowViewModel)?.Scene;
-    public Exercise? Exercise => (DataContext as MainWindowViewModel)?.Exercise;
-
+    private Scene? Scene => (DataContext as MainWindowViewModel)?.Scene;
+    private Exercise? Exercise => (DataContext as MainWindowViewModel)?.Exercise;
 
     public static readonly StyledProperty<Color> BackgroundColorProperty =
         AvaloniaProperty.Register<ProgramCanvas, Color>(nameof(BackgroundColor), defaultValue: Colors.White);
@@ -44,7 +42,7 @@ public class ProgramCanvas : Control
 
         var cellSize = new Size(rect.Width / Scene.Width, rect.Height / Scene.Height);
 
-        var mapDrawer = GetMapDrawer();
+        ExerciseMapDrawer mapDrawer = GetMapDrawer();
         mapDrawer.DrawMap(context, Scene, cellSize);
 
         const double characterSizePercentage = 0.6; // percentage of cell size
@@ -71,7 +69,7 @@ public class ProgramCanvas : Control
         }
 
         // draw path
-        Character? character = Scene.GetCharacter();
+        Character character = Scene.GetCharacter();
 
         var path = character.Path;
         path.Add(character.Position);
@@ -102,9 +100,9 @@ public class ProgramCanvas : Control
 
     }
 
-    private void DrawArrow(DrawingContext context, Point start, Point end, Pen pen)
+    private static void DrawArrow(DrawingContext context, Point start, Point end, Pen pen)
     {
-        var arrowSize = 10;
+        const int arrowSize = 10;
         double angle = Math.Atan2(end.Y - start.Y, end.X - start.X);
         var arrowEnd1 = new Point(end.X - arrowSize * Math.Cos(angle - Math.PI / 6), end.Y - arrowSize * Math.Sin(angle - Math.PI / 6));
         var arrowEnd2 = new Point(end.X - arrowSize * Math.Cos(angle + Math.PI / 6), end.Y - arrowSize * Math.Sin(angle + Math.PI / 6));

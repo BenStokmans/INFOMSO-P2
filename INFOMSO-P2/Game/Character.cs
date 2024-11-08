@@ -4,7 +4,7 @@ namespace INFOMSO_P2.Game;
 
 public class Character : Entity
 {
-    public List<Vector2> Path = [];
+    public readonly List<Vector2> Path = [];
 
     public override void Move(int distance, Scene scene)
     {
@@ -26,7 +26,7 @@ public class Character : Entity
 
     public override string ToString()
     {
-        string? directionString = Direction switch
+        string directionString = Direction switch
         {
             { X: 1, Y: 0 } => "east",
             { X: -1, Y: 0 } => "west",

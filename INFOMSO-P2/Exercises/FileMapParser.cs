@@ -6,7 +6,7 @@ public class FileMapParser : IMapParser
     public MapElement[,] Parse(string source)
     {
         string[] lines = source.Split('\n');
-        foreach (string line in lines) line.Trim();
+        lines = lines.Select(line => line.Trim()).ToArray();
 
         int width = lines[0].Length;
         var map = new MapElement[lines.Length, width];
@@ -30,6 +30,4 @@ public class FileMapParser : IMapParser
 
         return map;
     }
-
-    public string UserPrompt() => "Enter the path to the file to parse: ";
 }

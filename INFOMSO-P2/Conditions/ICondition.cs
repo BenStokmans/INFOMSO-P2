@@ -1,4 +1,4 @@
-using INFOMSO_P2.Game;
+﻿using INFOMSO_P2.Game;
 namespace INFOMSO_P2.Conditions;
 
 public interface ICondition

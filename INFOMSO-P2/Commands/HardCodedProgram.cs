@@ -1,6 +1,4 @@
-﻿using System.Text;
-
-namespace INFOMSO_P2.Commands;
+﻿namespace INFOMSO_P2.Commands;
 
 public class HardCodedProgramParser : IProgramParser
 {
@@ -11,7 +9,7 @@ public class HardCodedProgramParser : IProgramParser
         { "Expert-Shape", "RepeatUntil ReachedGoal\r\n\tRepeatUntil WallAhead\r\n\t\tMove 1\r\n\tTurn right\r\n\tMove 1\r\n\tTurn left\r\n\tMove 1\r\n\tTurn right\r\n" },
         { "Basic-Pathfinding", "Move 1\r\nTurn right\r\nMove 1\r\nTurn left\r\nMove 1\r\nTurn right\r\nMove 1\r\nTurn left\r\nMove 1\r\nTurn right\r\nMove 1\r\nTurn left\r\nMove 1\r\nTurn right\r\nMove 1\r\nTurn left\r\n" },
         { "Advanced-Pathfinding", "Repeat 4 times\r\n\tMove 1\r\n\tTurn right\r\n\tMove 1\r\n\tTurn left\r\n" },
-        { "Expert-Pathfinding", "RepeatUntil ReachedGoal\r\n\tMove 1\r\n\tTurn right\r\n\tMove 1\r\n\tTurn left\r\n" },
+        { "Expert-Pathfinding", "RepeatUntil ReachedGoal\r\n\tMove 1\r\n\tTurn right\r\n\tMove 1\r\n\tTurn left\r\n" }
     };
 
     public Program Parse(string source)
@@ -24,11 +22,11 @@ public class HardCodedProgramParser : IProgramParser
             name = _programs.ElementAt(index - 1).Key;
         }
 
-        if (!_programs.ContainsKey(name))
+        if (!_programs.TryGetValue(name, out string? value))
             throw new ArgumentOutOfRangeException("Invalid program name: " + name);
 
         var parser = new StringProgramParser();
-        return parser.Parse(_programs[name]);
+        return parser.Parse(value);
     }
 
     public string SourceCode(string source)
@@ -41,20 +39,9 @@ public class HardCodedProgramParser : IProgramParser
             name = _programs.ElementAt(index - 1).Key;
         }
 
-        if (!_programs.ContainsKey(name))
+        if (!_programs.TryGetValue(name, out string? value))
             throw new ArgumentOutOfRangeException("Invalid program name: " + name);
 
-        return _programs[name];
-    }
-
-    public string UserPrompt()
-    {
-        var sb = new StringBuilder();
-        sb.AppendLine("Available built-in programs:");
-        for (var i = 0; i < _programs.Count; i++)
-            sb.AppendLine($"{i + 1}. {_programs.ElementAt(i).Key}");
-
-        sb.Append("Select a program: ");
-        return sb.ToString();
+        return value;
     }
 }

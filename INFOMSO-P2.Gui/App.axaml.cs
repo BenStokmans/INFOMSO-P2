@@ -5,7 +5,7 @@ using INFOMSO_P2.Gui.ViewModels;
 
 namespace INFOMSO_P2.Gui;
 
-public partial class App : Application
+public class App : Application
 {
     public override void Initialize()
     {

@@ -27,5 +27,5 @@ public class RepeatCommand : RepeatUntilCommand
         Condition = new ExecutionCounterCondition(Times);
     }
 
-    public override string ToString() => $"Repeat";
+    public override string ToString() => "Repeat";
 }

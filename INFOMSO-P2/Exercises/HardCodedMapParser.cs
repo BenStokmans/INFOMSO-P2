@@ -1,23 +1,18 @@
-﻿using INFOMSO_P2.Commands;
-
-namespace INFOMSO_P2.Exercises;
+﻿namespace INFOMSO_P2.Exercises;
 
 public class HardCodedMapParser : IMapParser
 {
     public MapElement[,] Parse(string source)
     {
-        switch (source.ToLower())
+        return source.ToLower() switch
         {
-            case "pathfinding":
-                return CreatePathfindingMap();
-            case "shape":
-                return CreateShapeMap();
-            default:
-                throw new ArgumentOutOfRangeException(nameof(source), "Invalid map index");
-        }
+            "pathfinding" => CreatePathfindingMap(),
+            "shape" => CreateShapeMap(),
+            _ => throw new ArgumentOutOfRangeException(nameof(source), "Invalid map index")
+        };
     }
 
-    private MapElement[,] CreatePathfindingMap()
+    private static MapElement[,] CreatePathfindingMap()
     {
         var pathfindingMap = new MapElement[5, 5];
 
@@ -46,7 +41,7 @@ public class HardCodedMapParser : IMapParser
         return pathfindingMap;
     }
 
-    private MapElement[,] CreateShapeMap()
+    private static MapElement[,] CreateShapeMap()
     {
         var shapeMap = new MapElement[5, 5];
         // all corners are blocked

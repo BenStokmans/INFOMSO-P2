@@ -8,18 +8,19 @@ using INFOMSO_P2.Exercises;
 using INFOMSO_P2.Game;
 using INFOMSO_P2.Gui.ViewModels;
 using INFOMSO_P2.Metrics;
+// ReSharper disable UnusedParameter.Local
 
 namespace INFOMSO_P2.Gui;
 
 public partial class MainWindow : Window
 {
-    public MainWindowViewModel? ViewModel => DataContext as MainWindowViewModel;
+    private MainWindowViewModel? ViewModel => DataContext as MainWindowViewModel;
 
     private readonly List<IMetricsCalculator> _metrics =
     [
         new DepthMetricCalculator(),
         new RepeatMetricCalculator(),
-        new NumberOfCmdsMetricCalculator(),
+        new NumberOfCmdsMetricCalculator()
     ];
 
     public MainWindow()
@@ -37,7 +38,7 @@ public partial class MainWindow : Window
         Commands.Program program;
         try
         {
-            program = parser.Parse(ProgramBox.Text);
+            program = parser.Parse(ProgramBox.Text ?? string.Empty);
             program.Run(ViewModel.Scene);
         }
         catch (Exception ex)
@@ -47,11 +48,13 @@ public partial class MainWindow : Window
         }
 
         OutputBox.Text = "Program executed successfully\n";
-        Character? character = ViewModel.Scene.GetCharacter();
+        Character character = ViewModel.Scene.GetCharacter();
         string goalString = ViewModel.Scene.GoalPosition != null ? ViewModel.Scene.GoalPosition == character.Position ? " goal reached" : "goal not reached" : "";
         OutputBox.Text += $"End state {character} - {goalString}\n";
 
-        OutputBox.Text += "Metrics:\n";
+        OutputBox.Text += ViewModel.Exercise.IsCompleted(ViewModel.Scene) ? "Exercise completed\n" : "Exercise not completed\n";
+
+        OutputBox.Text += "\nMetrics:\n";
         foreach (IMetricsCalculator metric in _metrics)
             OutputBox.Text += $"{metric.CalculateMetrics(program)}\n";
 
@@ -63,29 +66,19 @@ public partial class MainWindow : Window
         if (e.AddedItems.Count == 0) return;
         if (ViewModel is null) return;
 
-        var selection = (ProgramSelection.SelectedItem as ComboBoxItem)?.Content.ToString();
+        var selection = (ProgramSelection.SelectedItem as ComboBoxItem)?.Content?.ToString();
 
-        IProgramParser parser;
-        switch (selection)
+        IProgramParser parser = selection switch
         {
-            case "Basic":
-                parser = new HardCodedProgramParser();
-                break;
-            case "Advanced":
-                parser = new HardCodedProgramParser();
-                break;
-            case "Expert":
-                parser = new HardCodedProgramParser();
-                break;
-            default:
-                parser = new FileProgramParser();
-                break;
-        }
-
+            "Basic" => new HardCodedProgramParser(),
+            "Advanced" => new HardCodedProgramParser(),
+            "Expert" => new HardCodedProgramParser(),
+            _ => new FileProgramParser()
+        };
 
         if (parser is HardCodedProgramParser)
         {
-            var exercise = (ExerciseBox.SelectedItem as ComboBoxItem)?.Content.ToString();
+            var exercise = (ExerciseBox.SelectedItem as ComboBoxItem)?.Content?.ToString();
             if (exercise == "From file...") return;
 
             try
@@ -101,11 +94,11 @@ public partial class MainWindow : Window
         }
 
         TopLevel? topLevel = GetTopLevel(this);
-        var files = await topLevel.StorageProvider.OpenFilePickerAsync(new FilePickerOpenOptions
+        var files = await topLevel?.StorageProvider.OpenFilePickerAsync(new FilePickerOpenOptions
         {
             Title = "Open Program File",
             AllowMultiple = false
-        });
+        })!;
 
         if (files.Count != 1) return;
         ProgramBox.Text = parser.SourceCode(files[0].Path.AbsolutePath);
@@ -116,17 +109,17 @@ public partial class MainWindow : Window
         if (e.AddedItems.Count == 0) return;
         if (ViewModel is null) return;
 
-        var selection = (ExerciseBox.SelectedItem as ComboBoxItem)?.Content.ToString();
+        var selection = (ExerciseBox.SelectedItem as ComboBoxItem)?.Content?.ToString();
 
         var source = "";
         if (selection == "From file...")
         {
             TopLevel? topLevel = GetTopLevel(this);
-            var files = await topLevel.StorageProvider.OpenFilePickerAsync(new FilePickerOpenOptions
+            var files = await topLevel?.StorageProvider.OpenFilePickerAsync(new FilePickerOpenOptions
             {
                 Title = "Open Exercise File",
                 AllowMultiple = false
-            });
+            })!;
 
             if (files.Count != 1) return;
             source = files[0].Path.AbsolutePath;
@@ -137,7 +130,7 @@ public partial class MainWindow : Window
             "Shape" => new ShapeExercise(),
             "Pathfinding" => new PathfindingExercise(),
             "From file.." => new FileExcercise(source),
-            _ => throw new ArgumentOutOfRangeException("exercise", "Invalid exercise selected")
+            _ => throw new Exception("Invalid exercise selected")
         };
         ViewModel.ResetScene();
         OutputCanvas.InvalidateVisual();

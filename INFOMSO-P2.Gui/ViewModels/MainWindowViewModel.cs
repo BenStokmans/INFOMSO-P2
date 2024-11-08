@@ -5,7 +5,7 @@ namespace INFOMSO_P2.Gui.ViewModels;
 
 public class MainWindowViewModel
 {
-    public Scene Scene { get; private set; }
+    public Scene Scene { get; private set; } = null!;
     public Exercise Exercise { get; set; }
 
     public MainWindowViewModel()

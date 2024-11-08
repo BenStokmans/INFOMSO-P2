@@ -4,7 +4,7 @@ namespace INFOMSO_P2.Metrics;
 
 public class DepthMetricCalculator : IMetricsCalculator
 {
-    public string CalculateMetrics(Commands.Program program)
+    public string CalculateMetrics(Program program)
     {
         var maxDepth = 0;
 

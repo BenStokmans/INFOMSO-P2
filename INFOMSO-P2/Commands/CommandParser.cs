@@ -2,7 +2,7 @@
 
 public static class CommandParser
 {
-    public static Command? ParseCommand(int line, string command)
+    public static Command ParseCommand(int line, string command)
     {
         string commandName = command.Split(' ')[0];
 

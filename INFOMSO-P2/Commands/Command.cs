@@ -4,7 +4,7 @@ namespace INFOMSO_P2.Commands;
 
 public abstract class Command
 {
-    public int Line { get; private set; }
+    protected int Line { get; private set; }
 
     public void Parse(int line, string command)
     {
@@ -12,7 +12,7 @@ public abstract class Command
         Parse(command);
     }
 
-    public abstract void Parse(string command);
+    protected abstract void Parse(string command);
     public abstract void Execute(Scene scene);
     public abstract override string ToString();
 }
