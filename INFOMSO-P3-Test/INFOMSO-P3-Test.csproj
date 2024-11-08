@@ -19,7 +19,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\INFOMSO-P2\INFOMSO-P2.csproj" />
+      <ProjectReference Include="..\INFOMSO-P3\INFOMSO-P3.csproj" />
     </ItemGroup>
 
 </Project>
